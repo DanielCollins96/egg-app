@@ -1,26 +1,57 @@
 import React from 'react';
-import logo from './logo.svg';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import Navbar from './components/navbar';
 import './App.css';
 
-function App() {
+export default function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/whites">
+            <Whites />
+          </Route>
+          <Route path="/yolks">
+            <Yolks />
+          </Route>
+          <Route path="/recipes">
+            <Recipes />
+          </Route>
+          <Route path="/submit">
+            <Submit />
+          </Route>
+        </Switch>
+      </Router>
+     
     </div>
   );
 }
 
-export default App;
+function Home() {
+  return <h2>Home</h2>;
+}
+
+function Whites() {
+  return <h2>Whites</h2>;
+}
+
+function Yolks() {
+  return <h2>Yolks</h2>;
+}
+
+function Recipes() {
+  return <h2>Recipes</h2>;
+}
+
+function Submit() {
+  return <h2>Submit</h2>;
+}
+
