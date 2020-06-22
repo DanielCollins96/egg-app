@@ -36,8 +36,18 @@
     transform: rotate(360deg);
   }
 }
-
+.option {
+  display: flex;
+}
 .count {
   display: flex;
   flex-direction: column;
+}
+
+.inner__counter {
+  display: flex;
+}
+
+.chart {
+  background: #242424;
 }
