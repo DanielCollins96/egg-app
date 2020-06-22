@@ -9,6 +9,7 @@ import { Doughnut } from 'react-chartjs-2';
 
 import Navbar from './components/navbar';
 import './App.css';
+import recipes from './dishes.json'
 
 export default function App() {
   return (
@@ -43,51 +44,40 @@ const Home = () => {
   const [whites, setWhites] = useState(0)
   const [visible, setVisibility] = useState(false)
 
-  const increment = () => {
-    setVisibility(false)
-    // setCount(count + 1)
-  }
+  let whiteDishes = recipes.filter(dish => 'whites' in dish )
+  let yolkDishes = recipes.filter(dish => 'yolks' in dish )
 
-  const decrement = () => {
-    // if (count > 0) 
-    //   return setCount(count - 1)
-    setVisibility(true)
-  }
+  yolkDishes.sort((a, b) => {
+    return a.yolks - b.yolks
+  })
+  whiteDishes.sort((a,b) => {
+    return a.whites - b.whites
+  })
 
-  const reset = () => {
-    setVisibility(false)
-    // setCount(0)
-  }
   const data = {
     labels: [
-      'White',
-      'Yellow'
+      'Yellow',
+      'White'
     ],
     datasets: [{
-      data: [whites, yolks],
+      data: [yolks, whites],
       backgroundColor: [
-      '#FFFF',
-      '#faf01b',
+        '#faf01b',
+        '#FFFF'
       ],
       hoverBackgroundColor: [
-        '#F8F8FF',
-      '#BFBF3F'
+        '#BFBF3F',
+        '#F8F8FF'
       ]
     }]
   };
+
   return (
-    <div className="count">
+    <div>
+
 
     <h2>Eggs</h2>
-    <div className="option">
-      <h3>Egg Whites</h3>
-      <div className="inner__counter">
-      <Button onClick={() => {setWhites(whites - 1)}}>-</Button>
-      <h3>{whites}</h3>
-      <Button onClick={() => {setWhites(whites + 1)}}>+</Button>
-      </div>
-      <Button onClick={() => {setWhites(0)}}>Reset</Button>
-    </div>
+    <div className="count">
     <div className="option">
       <h3>Egg Yolks</h3>
       <div className="inner__counter">
@@ -98,10 +88,35 @@ const Home = () => {
       </div>
       <Button onClick={() => {setYolks(0)}}>Reset</Button>
     </div>
-      <Alert style={{width: '40%', margin: '10px auto'}} color="warning" isOpen={visible}>Can't be less than 0!</Alert>
-    <hr></hr>
     <div className="chart">
       <Doughnut data={data} />
+    </div>
+    <div className="option">
+      <h3>Egg Whites</h3>
+      <div className="inner__counter">
+      <Button onClick={() => {whites > 1 ? setWhites(whites - 1) : setVisibility(true)}}>-</Button>
+      <h3>{whites}</h3>
+      <Button onClick={() => {setWhites(whites + 1)}}>+</Button>
+      </div>
+      <Button onClick={() => {setWhites(0)}}>Reset</Button>
+    </div>
+      <Alert style={{width: '40%', margin: '10px auto'}} color="warning" isOpen={visible}>Can't be less than 0!</Alert>
+    </div>
+    <hr></hr>
+    <div className="lists">
+      <div>
+        {yolkDishes.map((element) => {
+          if (yolks >= parseInt(element.yolks))
+          return <p>{element.yolks} Yolk(s) {element.name}</p>
+        })}
+      </div>
+      <div>
+        {whiteDishes.map((element) => {
+          if (whites >= parseInt(element.whites))
+          return <p>{element.whites} White(s) {element.name}</p>
+        })}
+      </div>
+    
     </div>
     </div>
   );
